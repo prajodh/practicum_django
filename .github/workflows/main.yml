@@ -24,5 +24,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run server
       run: |
-        cd ciphers_project
-        ls
+        docker login --username prajodhpragath --password ${{secrets.SECRET_TOKEN}} ghcr.io
+        docker build -t ghcr.io/prajodh/ciphers-service:latest --file dockerfile .
+        docker push ghcr.io/prajodh/ciphers-service:latest
