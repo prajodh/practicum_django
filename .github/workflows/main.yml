@@ -24,4 +24,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run server
       run: |
-        python manage.py runserver
+        python ../ciphers_project/manage.py runserver
