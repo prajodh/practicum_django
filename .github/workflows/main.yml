@@ -25,5 +25,5 @@ jobs:
     - name: Run server
       run: |
         docker login --username prajodhpragath --password ${{secrets.SECRET_TOKEN}} ghcr.io
-        docker build -t ghcr.io/prajodh/ciphers-service:latest --file dockerfile .
+        docker build -t ghcr.io/prajodh/ciphers-service:latest .
         docker push ghcr.io/prajodh/ciphers-service:latest
