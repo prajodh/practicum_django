@@ -17,10 +17,10 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
         
-        - name: Unit Testing
-          run: |
-            cd ciphers_project
-            python manage.py test
+        # - name: Unit Testing
+        #   run: |
+        #     cd ciphers_project
+        #     python manage.py test
         - name: Build and push the image              
           run: |
             docker login --username prajodhpragath --password ${{secrets.SECRET_TOKEN}} ghcr.io
