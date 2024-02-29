@@ -1,29 +1,28 @@
-name: Run The Tests
-
+name: Run the Tests
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run server
-      run: |
-        docker login --username prajodhpragath --password ${{secrets.SECRET_TOKEN}} ghcr.io
-        docker build -t ghcr.io/prajodh/ciphers-service:latest .
-        docker push ghcr.io/prajodh/ciphers-service:latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.11.5
+        - name: Install dependencies
+          run : |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+        
+        - name: Unit Testing
+          run: |
+            cd ciphers_project
+            python manage.py test
+        - name: Build and push the image              
+          run: |
+            docker login --username prajodhpragath --password ${{secrets.SECRET_TOKEN}} ghcr.io
+            docker build -t ghcr.io/prajodh/ciphers-service:latest --file dockerfile .
+            docker push ghcr.io/prajodh/ciphers-service:latest
