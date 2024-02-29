@@ -1,21 +1,19 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8
+FROM python:3.11.6-alpine
 
-# Set environment variables (optional)
-ENV PYTHONUNBUFFERED 1
+WORKDIR /home/application
 
-# Set the working directory inside the container
-WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1
 
-# Install dependencies (requirements.txt should be in your project directory)
-COPY requirements.txt /app/
+ENV PYTHONUNBUFFERED=1
+
+RUN pip install --upgrade pip
+
+COPY ./requirements.txt .
+
 RUN pip install -r requirements.txt
 
-# Copy your Django project files into the container
-COPY . /app/
+COPY ./ciphers_project ciphers_project/
 
-# Expose the port your Django app will run on
-EXPOSE 8000
+COPY ./entrypoint.sh .
 
-# Run the Django development server
-CMD ["python", "ciphers_project/manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT [ "./entrypoint.sh" ]
